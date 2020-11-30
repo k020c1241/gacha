@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <title>ガチャシミュレーター</title>
+    </head>
+    <body>
+        <center>
+        <div class="form">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <form action="/post" method="post" name="rare" class="form-inline">
+                    <button type="submit" name="rare" class="btn btn-default">レアガチャを回す</button>
+                  </form>
+                  <form action="/post" method="post" name="rare11" class="form-inline">
+                    <button type="submit" name="rare11" class="btn btn-default">11連ガチャを回す</button>
+                  </form>
+                  <form action="/post" method="post" name="reset" class="form-inline">
+                    <button type="submit" name="reset" class="btn btn-default">リセット</button>
+                  </form>
+                  <p class="lead">
+                    {% if result %}
+                        {{title}}<br>
+                        結果は
+                        <div>
+                      {% for v in result %}
+                      <img src = {{ v }} >
+                      {% endfor %}
+                      </div>
+                      でした！<br>
+                        画像提供：[ジュエルセイバーFREE]
+                        <a href=http://www.jewel-s.jp/>http://www.jewel-s.jp/</p>
+                      {% else %}
+                        {{ message }}
+                      {% endif %}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </center>
+    </body>
+</html>
