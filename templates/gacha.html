@@ -23,15 +23,19 @@
                   <p class="lead">
                     {% if result %}
                         {{title}}<br>
-                        結果は
-                        <div>
+                        結果は<br>
+                      <div>
                       {% for v in result %}
                       <img src = {{ v }} >
-                      {% endfor %}
+                      {% endfor %} 
                       </div>
                       でした！<br>
-                      {{ vo.count }} 回目 合計金額 {{ vo.price }} 円です<br>
-                      累計{{ vo.card }} <br>
+                      ーーー累計ーーー<br>
+                      N:{{ N }} N+:{{ Np }} R:{{ R }} R+:{{ Rp }} SR:{{ SR }} SR+:{{ SRp }}
+                      <br>
+                      {{ vo.Tcount }} 回目(レアガチャ:{{ vo.Scount }}回　１１連ガチャ:{{ vo.Ccount }}回) <br>
+                      合計金額 {{ vo.price }} 円です<br>
+                      {{ msg }}<br>
                         画像提供：[ジュエルセイバーFREE]
                         <a href=http://www.jewel-s.jp/>http://www.jewel-s.jp/</p>
                       {% else %}
