@@ -1,9 +1,5 @@
 from flask import Flask, render_template, request
-import random
 import numpy as np
-cards = ["N", "N+", "R", "R+", "SR", "SR+"]
-count_list = [0, 0, 0, 0, 0, 0]
-SRp_count = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 app = Flask(__name__)
 
@@ -11,9 +7,11 @@ app = Flask(__name__)
 @app.route("/")
 def top():
     title = "ガチャシミュレーター"
+    message = "ガチャを回そう！！"
     return render_template(
       'gacha.html',
-      title=title)
+      title=title,
+      message = message)
 
 #ガチャ後
 @app.route('/post', methods=['POST', 'GET'])
@@ -22,7 +20,8 @@ def gacha():
         result = []
         rare = []
         if "rare" in request.form:
-            title = "レアガチャを回しました"
+            title = "レアガチャを回しました！"
+            message = ""
             result = RareGacha()
             vo.price = vo.price + 100
             vo.Tcount = vo.Tcount + 1
@@ -30,13 +29,15 @@ def gacha():
             msg = SRpComp()
         if 'rare11' in request.form:
             title = "11連ガチャを回しました！"
+            message = ""
             result = Rare11Gacha()
             vo.price = vo.price + 1000
             vo.Tcount = vo.Tcount + 1
             vo.Ccount = vo.Ccount + 1
             msg = SRpComp()
         if 'reset' in request.form:
-            title = "リセットしました"
+            title = "リセット"
+            message = "リセットしました"
             vo.price = 0
             vo.Tcount = 0
             vo.Scount = 0
@@ -56,6 +57,7 @@ def gacha():
         result=result,
         rare=rare,
         title=title,
+        message = message,
         vo=vo,
         Scount=vo.Scount,
         Ccount=vo.Ccount,
@@ -70,6 +72,9 @@ def gacha():
         SR = count_list[4],
         SRp = count_list[5])
 
+cards = ["N", "N+", "R", "R+", "SR", "SR+"]
+count_list = [0, 0, 0, 0, 0, 0]
+SRp_count = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 #レアガチャ
 def RareGacha():
