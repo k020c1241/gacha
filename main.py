@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 import numpy as np
-
 app = Flask(__name__)
 
 #トップページ
@@ -10,11 +9,11 @@ def top():
     message = "ガチャを回そう！！"
     return render_template(
       'gacha.html',
-      title=title,
+      title = title,
       message = message)
 
 #ガチャ後
-@app.route('/post', methods=['POST', 'GET'])
+@app.route('/post', methods = ['POST', 'GET'])
 def gacha():
     if request.method == 'POST':
         result = []
@@ -26,7 +25,7 @@ def gacha():
             vo.price = vo.price + 100
             vo.Tcount = vo.Tcount + 1
             vo.Scount = vo.Scount + 1
-            msg = SRpComp()
+
         if 'rare11' in request.form:
             title = "11連ガチャを回しました！"
             message = ""
@@ -34,7 +33,7 @@ def gacha():
             vo.price = vo.price + 1000
             vo.Tcount = vo.Tcount + 1
             vo.Ccount = vo.Ccount + 1
-            msg = SRpComp()
+
         if 'reset' in request.form:
             title = "リセット"
             message = "リセットしました"
@@ -43,28 +42,27 @@ def gacha():
             vo.Scount = 0
             vo.Ccount = 0
             result = ""
-            msg = SRpComp()
-        """"
-        if 'aa' in request.form:
-            title = "debug"
-            result = debugfunc()
-            vo.price = vo.price + 1000
-            vo.count = vo.count + 1
-            msg = SRpComp()
-          """
+
+        if "comp" in request.form:
+            title = "SR+コンプリート!!"
+            message = "おめでとう！"
+            result = SRpComp(SRp_count)[0]
+            vo.price = SRpComp(SRp_count)[2]
+            vo.Tcount = SRpComp(SRp_count)[1]
+            vo.Ccount = SRpComp(SRp_count)[1]
+
+          
     return render_template(
         'gacha.html',
-        result=result,
-        rare=rare,
-        title=title,
+        result = result,
+        rare = rare,
+        title = title,
         message = message,
-        vo=vo,
-        Scount=vo.Scount,
-        Ccount=vo.Ccount,
-        Tcount=vo.Tcount,
-        price=vo.price,
-        msg = msg,
-        debug = SRp_count,
+        vo = vo,
+        Scount = vo.Scount,
+        Ccount = vo.Ccount,
+        Tcount = vo.Tcount,
+        price = vo.price,
         N = count_list[0],
         Np = count_list[1],
         R = count_list[2],
@@ -94,15 +92,21 @@ def Rare11Gacha():
     image_list.append(ImageChoice("SR"))
     RareCount("SR", count_list)
     return image_list   
-""""
-#debug:SR+コンプ
-def debugfunc():
+
+#SR+コンプガチャ
+def SRpComp(SRp_count):
     image_list = []
-    for i in range(25):
-      RareCount("SR+", count_list)
-      image_list.append(ImageChoice("SR+"))
-    return image_list 
-"""
+    compcount = 0
+    compprice = 0
+    flag = 1
+    while flag == 1:
+      if 0 in SRp_count:
+        Rare11Gacha()
+        compcount += 1
+        compprice += 1000
+      else:
+        flag = 0
+    return image_list,compcount,compprice
 
 #画像を指定してhtmlへ
 def ImageChoice(pick_rare):
@@ -123,14 +127,6 @@ def RareCount(pick_rare, count_list):
   list = ["N", "N+", "R", "R+", "SR", "SR+"]
   num = list.index(pick_rare)
   count_list[num] += 1
-#SRカウント
-def SRpComp():
-  msg = ""
-  if 0 in SRp_count:
-    pass
-  else:
-    msg ="SR+を全て獲得しました！！"
-  return msg
 
 #ガチャ回数、課金額の記録
 class VO(object):

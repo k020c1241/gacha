@@ -2,6 +2,10 @@
 <html lang="ja">
 
 <head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<title>ガチャシミュレーター</title>
 </head>
 
@@ -11,33 +15,34 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<form action="/post" method="post" name="rare" class="form-inline">
-							<button type="submit" name="rare" class="btn btn-default">レアガチャを回す</button>
+						      <form action="/post" method="post" name="rare" class="form-inline">
+							      <button type="submit" name="rare" class="btn btn-info">レアガチャを回す</button>
                   </form>
                   <form action="/post" method="post" name="rare11" class="form-inline">
-                    <button type="submit" name="rare11" class="btn btn-default">11連ガチャを回す</button>
+                    <button type="submit" name="rare11" class="btn btn-info">11連ガチャを回す</button>
+                  </form>
+                  <form action="/post" method="post" name="comp" class="form-inline">
+                    <button type="submit" name="comp" class="btn btn-primary">SR+コンプまでガチャ</button>
                   </form>
                   <form action="/post" method="post" name="reset" class="form-inline">
-                    <button type="submit" name="reset" class="btn btn-default">リセット</button>
+                    <button type="submit" name="reset" class="btn btn-danger">リセット</button>
                   </form>
                   <p class="lead">
                     {% if result %}
                         {{title}}<br>
-                        結果は<br>
                       <div>
                       {% for v in result %}
                       <img src = {{ v }} >
                       {% endfor %} 
                       </div>
-                      でした！<br>
                       ーーー累計ーーー<br>
                       N:{{ N }} N+:{{ Np }} R:{{ R }} R+:{{ Rp }} SR:{{ SR }} SR+:{{ SRp }}
                       <br>
                       {{ vo.Tcount }} 回目(レアガチャ:{{ vo.Scount }}回 11連ガチャ:{{ vo.Ccount }}回) <br>
                       合計金額 {{ vo.price }} 円です<br>
                       {{ msg }}<br>
-                        画像提供：[ジュエルセイバーFREE]
-                        <a href=http://www.jewel-s.jp/>http://www.jewel-s.jp/</p>
+                        画像提供：
+                        <a href=http://www.jewel-s.jp/>ジュエルセイバーFREE</a>
                       {% else %}
                         {{ message }}
                       {% endif %}
